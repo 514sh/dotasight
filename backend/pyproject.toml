@@ -1,0 +1,27 @@
+[project]
+name = "ai-draft-advisor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "asyncio>=4.0.0",
+    "fastapi[standard]>=0.135.1",
+    "flet[all]>=0.82.0",
+    "google-genai>=1.65.0",
+    "groq>=1.0.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.12.5",
+    "pyqt6>=6.10.2",
+    "pyqt6-webengine>=6.10.0",
+    "redis>=7.2.1",
+    "slowapi>=0.1.9",
+    "uvicorn>=0.41.0",
+]
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.42.1",
+]
+[tool.poe.tasks]
+dev = "uv run --env-file .env.development uvicorn main:app --port 3002 --reload"

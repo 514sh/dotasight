@@ -1,0 +1,26 @@
+# Docker local override
+docker-compose.override.yml
+
+# Env files
+.env
+.env.development
+.env.production
+backend/.env
+backend/.env.development
+frontend/.env
+
+# Logs
+backend/logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# todo
+todo.md

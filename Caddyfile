@@ -1,0 +1,12 @@
+dotasight.grog.com.ph {
+    handle {
+        reverse_proxy frontend:80
+    }
+}
+
+dotasight-api.grog.com.ph {
+    reverse_proxy backend:8000
+
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-For {remote_host}
+}
