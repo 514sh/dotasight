@@ -5,7 +5,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.frontend
       args:
-        VITE_API_URL: ${VITE_API_URL}
+        VITE_API_URL: https://dotasight-api.grog.com.ph
     container_name: dotasight-frontend
     restart: unless-stopped
     networks:
