@@ -1,28 +1,38 @@
 services:
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    container_name: dotasight-frontend
     restart: unless-stopped
     networks:
+      - web
       - app
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend
+    container_name: dotasight-backend
     command: uv run uvicorn main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
     env_file: ./backend/.env
+    environment:
+      ALLOWED_ORIGINS: "https://dotasight.grog.com.ph"
     volumes:
       - ./backend/logs:/app/logs
     depends_on:
       - redis
     networks:
+      - web
       - app
 
   redis:
     image: redis:7-alpine
+    container_name: dotasight-redis
     restart: unless-stopped
     volumes:
       - redis_data:/data
@@ -30,27 +40,11 @@ services:
     networks:
       - app
 
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app
-
 volumes:
   redis_data:
-  caddy_data:
-  caddy_config:
 
 networks:
+  web:
+    external: true
   app:
     driver: bridge
